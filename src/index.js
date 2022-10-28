@@ -18,5 +18,5 @@ app.use("/api", api);
 await mongoose();
 
 app.listen(PORT, () => {
-	console.log(`Server running on port ${PORT}`);
+	console.log(`[SERVER] Server running on port ${PORT}`);
 });
