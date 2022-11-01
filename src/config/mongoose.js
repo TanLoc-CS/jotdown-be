@@ -10,7 +10,7 @@ export default async () => {
 		mongoose
 			.connect(URI)
 			.then((result) => {
-				logger.info("[DATABASE] Connected to MongoDB");
+				logger.info(`[DATABASE] Connected to MongoDB: ${result.version}`);
 			})
 			.catch((error) => console.log(error));
 	} catch (error) {

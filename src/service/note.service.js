@@ -1,8 +1,8 @@
 // import logger from "../util/logger";
 import noteModel from "../model/note.model.js";
 
-const getNotes = async () => {
-	const notes = noteModel.find({}).then((notes) => notes);
+const getNotes = async (userId) => {
+	const notes = noteModel.find({ userId: userId }).then((notes) => notes);
 	return notes;
 };
 
@@ -19,11 +19,12 @@ const getNotebyTitle = async (searchValue) => {
 	);
 };
 
-const createNote = async (title, content) => {
+const createNote = async (title, content, userId) => {
 	const note = new noteModel({
 		title: title,
 		content: content,
 		date: Date.now(),
+		userId: userId,
 	});
 
 	return await noteModel.create(note);
