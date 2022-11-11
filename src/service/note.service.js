@@ -1,5 +1,6 @@
 // import logger from "../util/logger";
 import noteModel from "../model/note.model.js";
+import userModel from "../model/user.model.js";
 
 const getNotes = async (userId) => {
 	const notes = noteModel.find({ userId: userId }).then((notes) => notes);
@@ -20,6 +21,8 @@ const getNotebyTitle = async (searchValue) => {
 };
 
 const createNote = async (title, content, userId) => {
+	const user = await userModel.findById(userId);
+	console.log(user);
 	const note = new noteModel({
 		title: title,
 		content: content,
@@ -27,7 +30,9 @@ const createNote = async (title, content, userId) => {
 		userId: userId,
 	});
 
-	return await noteModel.create(note);
+	const savedNote = await noteModel.create(note);
+	console.log((user.notes = user.notes.concat(savedNote.id)));
+	return savedNote;
 };
 
 const deleteNote = async (_id) => {

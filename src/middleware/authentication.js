@@ -8,7 +8,6 @@ import TOKEN from "../util/token.js";
 
 function isAuthorized(req, res, next) {
 	const token = TOKEN.extract(req);
-
 	try {
 		const decoded = TOKEN.verify(token);
 		req.id = decoded._id;

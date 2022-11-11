@@ -26,8 +26,8 @@ export default (app) => {
 		const { username, password } = req.body;
 
 		try {
-			const token = await authService.verifyUser(username, password);
-			return res.status(StatusCodes.OK).json({ token: token });
+			const { data, token } = await authService.verifyUser(username, password);
+			return res.status(StatusCodes.OK).json({ data: data, token: token });
 		} catch (error) {
 			return res.status(StatusCodes.UNAUTHORIZED).json({
 				error: {

@@ -10,8 +10,8 @@ const generate = (data) => {
 
 const extract = (req) => {
 	const header = req.headers["authorization"];
-
-	if (typeof header === "undefined") throw "Invalid token";
+	// console.log(req.headers);
+	if (typeof header === "undefined") throw "extract: Invalid token";
 
 	const bearer = header.split(" ");
 	return bearer[1];
@@ -19,7 +19,7 @@ const extract = (req) => {
 
 const verify = (token) => {
 	const data = jwt.verify(token, process.env.JWT_SECRET);
-	if (!data) throw "Invalid token";
+	if (!data) throw "verify: Invalid token";
 
 	return data;
 };

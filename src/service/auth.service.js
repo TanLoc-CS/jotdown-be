@@ -30,7 +30,7 @@ const verifyUser = async (username, password) => {
 	};
 
 	const token = TOKEN.generate(data);
-	return token;
+	return { data, token };
 };
 
 const createUser = async (username, password) => {

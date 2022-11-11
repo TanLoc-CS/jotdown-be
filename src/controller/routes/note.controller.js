@@ -9,10 +9,12 @@ const noteRouter = Router();
 export default (app) => {
 	app.use("/", noteRouter);
 
-	noteRouter.get("/notes", isAuthorized, async (req, res) => {
-		const userId = req.id;
+	noteRouter.get("/notes/:id", async (req, res) => {
+		const userId = req.params.id;
+		console.log(req.body);
 		try {
 			const notes = await noteService.getNotes(userId);
+			if (!notes) throw "Empty note";
 			return res.json(notes);
 		} catch (error) {
 			console.log(error);
@@ -29,9 +31,8 @@ export default (app) => {
 		}
 	});
 
-	noteRouter.post("/note", isAuthorized, async (req, res) => {
-		const userId = req.id;
-		const { title, content } = req.body;
+	noteRouter.post("/note", async (req, res) => {
+		const { title, content, userId } = req.body;
 		try {
 			await noteService.createNote(title, content, userId);
 			return res.status(StatusCodes.CREATED).json({
