@@ -1,15 +1,15 @@
-import { v4 as uuidv4 } from "uuid";
-
 // import logger from "../util/logger";
 import noteModel from "../model/note.model.js";
+import userModel from "../model/user.model.js";
 
-const getNotes = async () => {
-	const notes = noteModel.find({}).then((notes) => notes);
+const getNotes = async (userId) => {
+	const notes = noteModel.find({ userId: userId }).then((notes) => notes);
 	return notes;
 };
 
 const getNotebyId = async (id) => {
 	const note = noteModel.find({ id: id }).then((note) => note);
+	if (!note) throw "NOTE NOT FOUND!";
 	return note;
 };
 
@@ -20,15 +20,19 @@ const getNotebyTitle = async (searchValue) => {
 	);
 };
 
-const createNote = async (title, content) => {
+const createNote = async (title, content, userId) => {
+	const user = await userModel.findById(userId);
+	console.log(user);
 	const note = new noteModel({
-		id: uuidv4(),
 		title: title,
 		content: content,
 		date: Date.now(),
+		userId: userId,
 	});
 
-	return await noteModel.create(note);
+	const savedNote = await noteModel.create(note);
+	console.log((user.notes = user.notes.concat(savedNote.id)));
+	return savedNote;
 };
 
 const deleteNote = async (_id) => {

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import dotenv, { config } from "dotenv";
+import dotenv from "dotenv";
 import logger from "../util/logger.js";
 
 dotenv.config();
@@ -10,10 +10,10 @@ export default async () => {
 		mongoose
 			.connect(URI)
 			.then((result) => {
-				logger.info("Connected to MongoDB");
+				logger.info(`[DATABASE] Connected to MongoDB: ${result.version}`);
 			})
 			.catch((error) => console.log(error));
 	} catch (error) {
-		logger.error("Error connecting to MongoDB:", error);
+		logger.error("[DBS] Error connecting to MongoDB:", error);
 	}
 };
