@@ -46,8 +46,7 @@ const createUser = async (username, password) => {
 		hashPwd: hashPwd,
 		createdAt: Date.now(),
 	});
-
-	return await userModel.create(newUser);
+	await userModel.create(newUser);
 };
 
 const authService = { getUsers, createUser, verifyUser, getUser };

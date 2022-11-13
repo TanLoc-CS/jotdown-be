@@ -40,8 +40,8 @@ export default (app) => {
 	authRouter.post("/register", async (req, res) => {
 		const { username, password } = req.body;
 		try {
-			const newUser = await authService.createUser(username, password);
-			// res.status(StatusCodes.CREATED).json(newUser);
+			await authService.createUser(username, password);
+
 			return res.status(StatusCodes.CREATED).json({
 				info: {
 					message: "SUCCESS_CREATED",
